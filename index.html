@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>zaycoo — Coming Soon</title>
+    <meta
+      name="description"
+      content="Our new e‑commerce experience is almost here. Get notified when we launch!"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%2300bcd4'/%3E%3Ctext x='50' y='60' text-anchor='middle' font-size='56' font-family='Arial' fill='white'%3ES%3C/text%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --bg: #0b1020;
+        --bg2: #121932;
+        --txt: #e9eef7;
+        --muted: #a6b1c9;
+        --brand: #6ee7ff;
+        --brand-2: #7c3aed;
+        --accent: #22c55e;
+        --danger: #ef4444;
+        --card: #0f1530cc;
+        --ring: #93c5fd55;
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #f7fafc;
+          --bg2: #eef2ff;
+          --txt: #0b1020;
+          --muted: #47506b;
+          --card: #ffffffcc;
+        }
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans",
+          "Apple Color Emoji", "Segoe UI Emoji";
+        color: var(--txt);
+        background: radial-gradient(
+            1200px 600px at 10% 10%,
+            var(--bg2),
+            transparent
+          ),
+          radial-gradient(1400px 900px at 90% 20%, #0b1020, transparent),
+          linear-gradient(160deg, var(--bg), #0a0f1f 60%);
+        overflow-x: hidden;
+      }
+
+      /* Subtle moving blobs */
+      .blob {
+        position: fixed;
+        inset: -20vmax;
+        z-index: -1;
+        filter: blur(80px);
+        opacity: 0.4;
+        animation: float 30s linear infinite;
+      }
+      .blob.one {
+        background: conic-gradient(
+          from 180deg,
+          var(--brand),
+          transparent 30%,
+          var(--brand-2)
+        );
+        mix-blend-mode: screen;
+      }
+      .blob.two {
+        background: radial-gradient(
+            circle at 30% 70%,
+            var(--brand-2),
+            transparent 40%
+          ),
+          radial-gradient(circle at 70% 30%, var(--brand), transparent 40%);
+        animation-direction: reverse;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(-2%) rotate(0deg);
+        }
+        50% {
+          transform: translateY(2%) rotate(180deg);
+        }
+        100% {
+          transform: translateY(-2%) rotate(360deg);
+        }
+      }
+
+      .wrapper {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 20px 48px;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: inherit;
+      }
+      .logo-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        display: grid;
+        place-items: center;
+        box-shadow: 0 10px 30px #0006;
+      }
+      .logo-badge svg {
+        width: 24px;
+        height: 24px;
+      }
+      .logo-title {
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        font-size: 1.1rem;
+      }
+
+      .pill {
+        padding: 6px 10px;
+        border: 1px solid var(--ring);
+        border-radius: 999px;
+        font-size: 0.85rem;
+        color: var(--muted);
+        backdrop-filter: blur(6px);
+        background: #ffffff06;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 40px;
+        align-items: center;
+        margin-top: 42px;
+      }
+      @media (max-width: 900px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        line-height: 1.1;
+        margin: 10px 0 12px;
+      }
+      .hero p {
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid #ffffff14;
+        border-radius: 18px;
+        box-shadow: 0 10px 40px #0006;
+        overflow: hidden;
+      }
+      .card .inner {
+        padding: 18px;
+      }
+
+      .countdown {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .unit {
+        text-align: center;
+        padding: 16px;
+        border-radius: 14px;
+        background: #0f1538a6;
+        border: 1px solid #ffffff15;
+      }
+      .num {
+        font-weight: 800;
+        font-size: clamp(1.4rem, 4.8vw, 2.2rem);
+      }
+      .label {
+        color: var(--muted);
+        font-size: 0.85rem;
+        letter-spacing: 0.3px;
+      }
+
+      .progress {
+        margin-top: 14px;
+      }
+      .progress-bar {
+        height: 10px;
+        border-radius: 999px;
+        background: #ffffff14;
+        overflow: hidden;
+      }
+      .progress-bar > span {
+        display: block;
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--brand), var(--brand-2));
+        transition: width 0.8s ease;
+      }
+      .progress-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      form.notify {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .notify input[type="email"] {
+        flex: 1;
+        padding: 14px 14px;
+        border-radius: 14px;
+        border: 1px solid #ffffff20;
+        background: #0f1538a6;
+        color: var(--txt);
+        outline: none;
+        box-shadow: inset 0 0 0 1px transparent;
+      }
+      .notify input[type="email"]::placeholder {
+        color: #93a0c2;
+      }
+      .notify button {
+        padding: 14px 16px;
+        border: 0;
+        border-radius: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        color: #0b1020;
+        box-shadow: 0 8px 26px #0007;
+      }
+      .status {
+        font-size: 0.9rem;
+        margin-top: 8px;
+        min-height: 1.2em;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+      .feat {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 12px;
+        border: 1px dashed #ffffff2a;
+        border-radius: 14px;
+        background: #0c122c66;
+      }
+      .feat svg {
+        min-width: 20px;
+      }
+      .feat h4 {
+        margin: 0;
+        font-size: 1rem;
+      }
+      .feat p {
+        margin: 2px 0 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      @media (max-width: 700px) {
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .social {
+        display: flex;
+        gap: 8px;
+      }
+      .social a {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        border: 1px solid #ffffff18;
+        background: #0f1538a6;
+        text-decoration: none;
+        color: var(--txt);
+      }
+      .social a:hover {
+        transform: translateY(-2px);
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-top: 40px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        border-top: 1px solid #ffffff14;
+        padding-top: 20px;
+      }
+      footer nav {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      footer a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px dotted #ffffff33;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="blob one" aria-hidden="true"></div>
+    <div class="blob two" aria-hidden="true"></div>
+
+    <div class="wrapper">
+      <header>
+        <a class="logo" href="#" aria-label="ShopWave home">
+          <span class="logo-badge" aria-hidden="true">
+            <!-- shopping bag icon -->
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 2h12" />
+              <path d="M3 6h18" />
+              <path d="M6 6l1 14a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-14" />
+              <path d="M9 10a3 3 0 0 0 6 0" />
+            </svg>
+          </span>
+          <span class="logo-title">zaycoo</span>
+        </a>
+        <span class="pill" aria-live="polite">🚀 Launching soon</span>
+      </header>
+
+      <main>
+        <section class="hero">
+          <h1>Something delightful is on the way</h1>
+          <p>
+            We’re crafting a fresh e‑commerce experience with fast checkout,
+            curated brands, and exclusive drops. Be first to know when we open.
+          </p>
+
+          <div class="card" aria-labelledby="countdown-title">
+            <div class="inner">
+              <h2 id="countdown-title" class="sr-only">Countdown to launch</h2>
+              <!-- Set your dates via data attributes (local time). -->
+              <div
+                id="countdown"
+                class="countdown"
+                data-launch="2025-12-01T10:00:00"
+                data-start="2025-09-01T00:00:00"
+              >
+                <div class="unit">
+                  <div class="num" id="d">00</div>
+                  <div class="label">Days</div>
+                </div>
+                <div class="unit">
+                  <div class="num" id="h">00</div>
+                  <div class="label">Hours</div>
+                </div>
+                <div class="unit">
+                  <div class="num" id="m">00</div>
+                  <div class="label">Minutes</div>
+                </div>
+                <div class="unit">
+                  <div class="num" id="s">00</div>
+                  <div class="label">Seconds</div>
+                </div>
+              </div>
+              <div class="progress" aria-live="polite">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="0"
+                  aria-label="Progress to launch"
+                >
+                  <span id="pbar"></span>
+                </div>
+                <div class="progress-meta">
+                  <span id="ptext">0% to launch</span>
+                  <span id="ldate">Launching —</span>
+                </div>
+              </div>
+
+              <form
+                class="notify"
+                id="notify"
+                aria-labelledby="notify-title"
+                novalidate
+              >
+                <h2 id="notify-title" class="sr-only">Get notified</h2>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  autocomplete="email"
+                  required
+                  aria-required="true"
+                />
+                <button type="submit" aria-label="Notify me when you launch">
+                  Notify me
+                </button>
+              </form>
+              <div
+                id="status"
+                class="status"
+                role="status"
+                aria-live="polite"
+              ></div>
+
+              <div class="features" aria-label="Highlights">
+                <div class="feat">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="20"
+                    height="20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 7h-9" />
+                    <path d="M14 17H5" />
+                    <circle cx="17" cy="17" r="3" />
+                    <circle cx="7" cy="7" r="3" />
+                  </svg>
+                  <div>
+                    <h4>Hand‑picked brands</h4>
+                    <p>Only quality gear we’d use ourselves.</p>
+                  </div>
+                </div>
+                <div class="feat">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="20"
+                    height="20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M21 15V8a2 2 0 0 0-2-2h-6l-2-3H5a2 2 0 0 0-2 2v10"
+                    />
+                    <path d="M3 13h18" />
+                    <path d="M13 19a2 2 0 1 0 4 0" />
+                  </svg>
+                  <div>
+                    <h4>Fast, free shipping</h4>
+                    <p>Door‑to‑door in days, not weeks.</p>
+                  </div>
+                </div>
+                <div class="feat">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="20"
+                    height="20"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M3 11h18" />
+                    <path d="M5 7h14" />
+                    <path d="M7 3h10" />
+                    <path d="M7 21l5-5 5 5" />
+                  </svg>
+                  <div>
+                    <h4>Early‑bird deals</h4>
+                    <p>Subscribers get first dibs & discounts.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="card">
+          <div class="inner">
+            <h3 style="margin: 0 0 8px">What to expect</h3>
+            <p style="color: var(--muted); margin: 0 0 16px">
+              Modern UI, secure payments, and drop‑style releases. Meanwhile,
+              follow us:
+            </p>
+            <div class="social" aria-label="Social links">
+              <a
+                href="https://x.com/karan_k_code"
+                aria-label="Follow on X (Twitter)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M18.384 2H21l-6.59 7.52L22 22h-6.93l-4.52-5.89L4.3 22H2l7.09-8.09L2 2h6.93l4.17 5.43L18.384 2Zm-1.21 18h2.1L7.95 4h-2.1L17.174 20Z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="https://instagram.com/karan_k_code"
+                aria-label="Follow on Instagram"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5Zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7Zm11 2a1 1 0 110 2 1 1 0 010-2ZM12 7a5 5 0 110 10 5 5 0 010-10Zm0 2a3 3 0 100 6 3 3 0 000-6Z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="https://www.facebook.com/share/g6CULxzUt6DLVopG/?mibextid=qi2Omg"
+                aria-label="Follow on Facebook"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M13 22V12h3l1-4h-4V6a2 2 0 0 1 2-2h2V0h-3a5 5 0 0 0-5 5v3H6v4h3v10h4Z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="https://linkedin.com/in/karan-kumar-306a27273"
+                aria-label="Connect on LinkedIn"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="18"
+                  height="18"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 5 2.12 5 3.5ZM0 8h5v13H0V8Zm7 0h4.8v1.8h.07c.67-1.2 2.3-2.47 4.73-2.47 5.06 0 6 3.33 6 7.66V21H18V15.2c0-1.38-.02-3.17-1.93-3.17-1.93 0-2.23 1.5-2.23 3.06V21H9.01V8H7Z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </aside>
+      </main>
+
+      <footer>
+        <nav>
+          <a href="mailto:kitmoindia@gimai.com">Contact</a>
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </nav>
+        <div>© <span id="year"></span> zaycoo. All rights reserved.</div>
+      </footer>
+    </div>
+
+    <script>
+      // === Countdown & Progress ===
+      (function () {
+        const el = document.getElementById("countdown");
+        if (!el) return;
+        const launchStr = el.dataset.launch; // e.g., 2025-12-01T10:00:00 (local time)
+        const startStr = el.dataset.start; // optional start of project for progress bar
+        const launch = new Date(launchStr);
+        const start = startStr ? new Date(startStr) : null;
+
+        const out = {
+          d: document.getElementById("d"),
+          h: document.getElementById("h"),
+          m: document.getElementById("m"),
+          s: document.getElementById("s"),
+        };
+        const pbar = document.getElementById("pbar");
+        const ptext = document.getElementById("ptext");
+        const ldate = document.getElementById("ldate");
+
+        const fmtLaunch = new Intl.DateTimeFormat(undefined, {
+          dateStyle: "medium",
+          timeStyle: "short",
+        }).format(launch);
+        ldate.textContent = `Launching — ${fmtLaunch}`;
+
+        function tick() {
+          const now = new Date();
+          let diff = launch - now;
+          if (diff < 0) diff = 0;
+          const secs = Math.floor(diff / 1000) % 60;
+          const mins = Math.floor(diff / (1000 * 60)) % 60;
+          const hrs = Math.floor(diff / (1000 * 60 * 60)) % 24;
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          out.d.textContent = String(days).padStart(2, "0");
+          out.h.textContent = String(hrs).padStart(2, "0");
+          out.m.textContent = String(mins).padStart(2, "0");
+          out.s.textContent = String(secs).padStart(2, "0");
+
+          // Progress bar: from start -> launch
+          if (start) {
+            const total = launch - start;
+            const elapsed = Math.min(Math.max(now - start, 0), total);
+            const pct = total > 0 ? Math.round((elapsed / total) * 100) : 100;
+            pbar.style.width = pct + "%";
+            pbar.parentElement.setAttribute("aria-valuenow", pct);
+            ptext.textContent = `${pct}% to launch`;
+          } else {
+            const pct = Math.min(
+              99,
+              Math.round((1 - diff / (1000 * 60 * 60 * 24 * 90)) * 100)
+            );
+            pbar.style.width = Math.max(0, pct) + "%";
+            ptext.textContent = `${Math.max(0, pct)}% to launch`;
+          }
+        }
+
+        tick();
+        setInterval(tick, 1000);
+      })();
+
+      // === Email capture (local only) ===
+      (function () {
+        const form = document.getElementById("notify");
+        const email = document.getElementById("email");
+        const status = document.getElementById("status");
+        if (!form) return;
+
+        const KEY = "shopwave:early-access-emails";
+        function saveEmail(addr) {
+          const list = JSON.parse(localStorage.getItem(KEY) || "[]");
+          if (list.includes(addr)) return false;
+          list.push(addr);
+          localStorage.setItem(KEY, JSON.stringify(list));
+          return true;
+        }
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const addr = email.value.trim();
+          if (!addr) {
+            status.textContent = "Please enter your email.";
+            status.style.color = "var(--danger)";
+            email.focus();
+            return;
+          }
+          const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(addr);
+          if (!ok) {
+            status.textContent = "That doesn't look like a valid email.";
+            status.style.color = "var(--danger)";
+            email.focus();
+            return;
+          }
+          const fresh = saveEmail(addr);
+          status.textContent = fresh
+            ? "Thanks! You're on the list. 🎉"
+            : "You're already subscribed.";
+          status.style.color = "var(--accent)";
+          console.log("Early access signup:", addr);
+          form.reset();
+        });
+      })();
+
+      // === Year ===
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
